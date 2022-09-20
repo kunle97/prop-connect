@@ -1,0 +1,55 @@
+.property-col-img-container {
+  height: 175px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.property-tag {
+  border-radius: 50px;
+  background: rgba(12,162,226,0.75);
+  color: white;
+  padding: 5px 15px;
+  margin-right: 15px;
+  font-size: 12pt;
+}
+
+.property-name {
+  margin-bottom: 15px;
+  font-size: 14pt;
+}
+
+.property-inner-container {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  overflow: hidden;
+}
+
+.property-text-container {
+  padding: 0 10px;
+}
+
+.property-tag-container {
+  margin-bottom: 15px;
+}
+
+.property-profit {
+  color: green;
+}
+
+.total-profit-heading {
+  margin-bottom: 20px;
+}
+
+.property-col {
+  margin-bottom: 15px;
+}
+
+.ui-text {
+  color: #0ca2e2;
+}
+
+.property-tag-outer {
+  display: inline-block;
+}
+

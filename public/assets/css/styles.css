@@ -1,0 +1,41 @@
+.ui-btn {
+  background: rgba(12,162,226,0.75);
+  border: none;
+}
+
+.component-container {
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 15px;
+  margin: 5px 0 25px;
+  background: white;
+}
+
+.heading-container {
+  overflow: auto;
+  margin-bottom: 35px;
+  vertical-align: middle;
+}
+
+.nav-item {
+  /*color: black !important;*/
+}
+
+.nav-item-span {
+  font-size: 12pt;
+  color: black;
+}
+
+.nav-icon {
+  width: 35px;
+  margin-right: 10px;
+}
+
+.nav-logo {
+  width: 100%;
+}
+
+.property-img {
+  width: 100%;
+}
+
