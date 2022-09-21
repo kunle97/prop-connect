@@ -57,3 +57,16 @@
 .property-tag-outer {
     display: inline-block;
 }
+.unit-section {
+    padding: 15px 0;
+}
+.unit-controls {
+    margin-top: 10px;
+}
+
+.unit-row {
+    margin: 15px 0;
+}
+.unit-form-group {
+    margin-top: 10px;
+}

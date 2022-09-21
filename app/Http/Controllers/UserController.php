@@ -63,4 +63,18 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/dashboard/login');
     }
+
+    public function updateBasicInfo(Request $request)
+    { //handles Updates to users name and email
+        $name = $request['name'];
+        $email = $request['email'];
+        $user =  User::findOrFail(Auth::User()->id);
+
+        $user->name = $name;
+        $user->email = $email;
+
+        if ($user->update()) {
+            return redirect()->back();
+        }
+    }
 }

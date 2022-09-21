@@ -27,10 +27,10 @@ Route::get('/dashboard/login/', [UserController::class, 'loginView'])->name('log
 Route::get('/dashboard/register/', [UserController::class, 'registerView']);
 Route::get('/dashboard/forgot-password/', [UserController::class, 'forgotPasswordView']);
 
-Route::middleware('auth')->group(function () {
-    //Use this to protect routes that require you to sign in
+Route::middleware('auth')->group(function () { //Use this to protect routes that require you to sign in
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
     Route::get('/dashboard/my-account', [DashboardController::class, 'myAccount']);
+    Route::post('/dashboard/update-my-account', [UserController::class, 'updateBasicInfo']);
 
     Route::get('/dashboard/maintenance/create-maintenance-request', [MaintenanceRequestController::class, 'createMaintenanceRequest']);
     Route::get('/dashboard/maintenance/maintenance-requests', [MaintenanceRequestController::class, 'maintenanceRequests']);
@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/add-property/', [PropertyController::class, 'addProperty']);
     Route::get('/dashboard/manage-property/', [PropertyController::class, 'manageProperty']);
     Route::get('/dashboard/add-unit/', [PropertyController::class, 'addUnit']);
+    Route::post('/dashboard/post-add-property', [PropertyController::class, 'createPropery']);
 
     Route::get('/dashboard/manage-tenant/', [TenantController::class, 'manageTenant']);
     Route::get('/dashboard/tenants/', [TenantController::class, 'tenants']);

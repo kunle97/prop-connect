@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('property_id');
             $table->string('beds');
             $table->string('baths');
-            $table->integer('user_id');
-            $table->integer('lease_agreement_id');
+            $table->integer('tenant_id')->nullable();
+            $table->integer('lease_agreement_id')->nullable();
             $table->timestamps();
         });
     }

@@ -12,14 +12,26 @@ Add A Property
             <h3 class="text-dark mb-4">Add Property</h3>
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <form>
-                        <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address" required=""></div>
+                    <form enctype="multipart/form-data" method="POST" action="/dashboard/post-add-property">
+                        <div class="mb-3">
+                            <label class="form-label" for="name"><strong>Nickname (Optional)</strong></label>
+                            <input class="form-control" type="text" id="name" placeholder="" name="name" required="" value="Home 2">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="address"><strong>Address</strong></label>
+                            <input class="form-control" type="text" id="address" placeholder="" name="address" required="" value="38 Sunset Blvd">
+                        </div>
                         <div class="row">
                             <div class="col">
-                                <div class="mb-3"><label class="form-label" for="city"><strong>City</strong></label><input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city" required=""></div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="city"><strong>City</strong></label>
+                                    <input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city" required="" value="Los Angeles">
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="mb-3"><label class="form-label" for="country"><strong>State</strong></label><select class="form-select">
+                                <div class="mb-3">
+                                    <label class="form-label" for="state"><strong>State</strong></label>
+                                    <select class="form-select" name="state">
                                         <option value="">--</option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
@@ -72,31 +84,85 @@ Add A Property
                                         <option value="WV">West Virginia</option>
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
-                                    </select></div>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="mb-3"><label class="form-label" for="country"><strong>Country</strong></label><input class="form-control" type="text" id="country-1" placeholder="USA" name="country" required=""></div>
+                                <div class="mb-3"><label class="form-label" for="zip">
+                                        <strong>Zip</strong></label>
+                                    <input class="form-control" type="text" id="zip" name="zip" required="" value="90210">
+                                </div>
                             </div>
+
                         </div>
+
                         <div class="row">
                             <div class="col">
-                                <div><label class="form-label">Beds</label><input class="form-control form-control" type="number" name="beds" value="1" required=""></div>
-                            </div>
-                            <div class="col">
-                                <div><label class="form-label">Baths</label><input class="form-control form-control" type="number" name="baths" value="1" required=""></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mt-3"><label class="form-label">Property Value</label><input class="form-control form-control" type="text" required=""></div>
-                                <div class="mt-3"><label class="form-label">MLS# (Optional)</label><input class="form-control form-control" type="text" required=""></div>
+                                <div class="mt-3">
+                                    <label class="form-label">Property Value (Optional)</label>
+                                    <input class="form-control form-control" type="text" value="324783">
+                                </div>
+                                <div class="mt-3">
+                                    <label class="form-label">MLS# (Optional)</label>
+                                    <input class="form-control form-control" type="text" name="mls_number" value="76F13RG6328F32WCDS32">
+                                </div>
                             </div>
                         </div>
-                        <div class="text-end my-3"><button class="btn btn-primary ui-btn" type="submit">Create Property</button></div>
+
+                        <div class="unit-section">
+
+                            <div class="unit-rows">
+                                <h4>Units</h4>
+                                <div class="row unit-row">
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Room Number</label>
+                                        <input type="text" class="form-control unit-input" name="unit_names[]" required />
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Beds</label>
+                                        <input type="number" value="1" min="1" class="form-control unit-input" name="unit_beds[]" required />
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Baths</label>
+                                        <input type="number" value="1" min="1" class="form-control unit-input" name="unit_baths[]" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="unit-controls">
+                                <button type="button" class="btn btn-primary ui-btn remove-unit-btn">-</button>
+                                <button type="button" class="btn btn-primary ui-btn add-unit-btn">+</button>
+                            </div>
+                        </div>
+                        <div class="text-end my-3">
+                            <button class="btn btn-primary ui-btn" type="submit">Create Property</button>
+                        </div>
+                        @if($errors->any())
+                        <p  class="error" >{{$errors->first()}}</p>
+                        @endif
+                        {{@csrf_field()}}
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    (function($) {
+        $unit_rows_section = $('.unit-rows');
+        $unit_row = '<div class="row unit-row unit-row-extra"> <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Room Number</label> <input required type="text" class="form-control unit-input" name="unit_names[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Beds</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_beds[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Baths</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_baths[]"/> </div></div>';
+        $add_unit = $('.add-unit-btn');
+        $remove_unit = $('.remove-unit-btn');
+
+        $add_unit.click(function() {
+            $unit_rows_section.append($unit_row);
+        });
+        $remove_unit.click(function() {
+            $('.unit-row-extra').last().remove();
+        });
+    })(jQuery);
+</script>
 @endsection
