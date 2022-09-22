@@ -4,9 +4,12 @@
 
 @section('content')
 <div class="container-fluid">
-    <h3 class="text-dark mb-4">Maintainance Requests</h3>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-8 offset-sm-0 offset-md-0 offset-lg-2">
+            <div class="col-12 heading-container">
+                <a class="btn btn-primary float-end new-property-btn ui-btn" role="button" href="/dashboard/add-property">New Maintenance Request</a>
+                <h3 class="text-dark">Maintenance Requests</h3>
+            </div>
             <div class="card shadow">
                 <div class="card-body">
                     <div class="row">

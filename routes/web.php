@@ -32,14 +32,19 @@ Route::middleware('auth')->group(function () { //Use this to protect routes that
     Route::get('/dashboard/my-account', [DashboardController::class, 'myAccount']);
     Route::post('/dashboard/update-my-account', [UserController::class, 'updateBasicInfo']);
 
-    Route::get('/dashboard/maintenance/create-maintenance-request', [MaintenanceRequestController::class, 'createMaintenanceRequest']);
-    Route::get('/dashboard/maintenance/maintenance-requests', [MaintenanceRequestController::class, 'maintenanceRequests']);
+    Route::get('/dashboard/create-maintenance-request', [MaintenanceRequestController::class, 'createMaintenanceRequest']);
+    Route::get('/dashboard/maintenance-requests', [MaintenanceRequestController::class, 'maintenanceRequests']);
 
     Route::get('/dashboard/properties/', [PropertyController::class, 'properties']);
     Route::get('/dashboard/add-property/', [PropertyController::class, 'addProperty']);
-    Route::get('/dashboard/manage-property/', [PropertyController::class, 'manageProperty']);
-    Route::get('/dashboard/add-unit/', [PropertyController::class, 'addUnit']);
-    Route::post('/dashboard/post-add-property', [PropertyController::class, 'createPropery']);
+    Route::post('/dashboard/post-add-property', [PropertyController::class, 'createProperty']);
+    Route::get('/dashboard/manage-property/{property_id}', [PropertyController::class, 'manageProperty']);
+    Route::get('/dashboard/delete-property/{property_id}', [PropertyController::class, 'deleteProperty']);
+
+    Route::get('/dashboard/add-unit/{property_id}', [PropertyController::class, 'addUnit']);
+    Route::post('/dashboard/post-add-unit', [PropertyController::class, 'createUnit']);
+    Route::get('/dashboard/delete_unit/{unit_id}', [PropertyController::class, 'deleteUnit']);
+
 
     Route::get('/dashboard/manage-tenant/', [TenantController::class, 'manageTenant']);
     Route::get('/dashboard/tenants/', [TenantController::class, 'tenants']);

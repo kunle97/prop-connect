@@ -9,15 +9,7 @@ Manage Property
 @section('content')
 <div class="container-fluid">
     <div class="row mb-3">
-        <div class="col-lg-4">
-            <div class="card mb-3">
-                <div class="card-body text-center shadow">
-                    <div class="property-col-img-container"><img class="property-img mb-3" src="../assets/img/apartment-406901_1280.jpeg"></div>
-                    <div class="mb-3"><button class="btn btn-primary btn-sm ui-btn" type="button">Change Photo</button></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8">
+        <div class="col-sm-12 col-md-12 col-lg-10 offset-sm-0 offset-md-0 offset-lg-1">
             <div class="row mb-3 d-none">
                 <div class="col">
                     <div class="card text-white bg-primary shadow">
@@ -53,13 +45,22 @@ Manage Property
                     <div class="card shadow mb-3">
                         <div class="card-body">
                             <form>
-                                <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="address"><strong>Address</strong></label>
+                                    <input class="form-control" type="text" id="address" name="address" value="{{$property->street_address}}">
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <div class="mb-3"><label class="form-label" for="city"><strong>City</strong></label><input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="city"><strong>City</strong></label>
+                                            <input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city" value="{{$property->city}}">
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <div class="mb-3"><label class="form-label" for="country"><strong>State</strong></label><select class="form-select">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="country"><strong>State</strong></label>
+                                            <select class="form-select">
+                                                <option value="{{$property->state}}">{{$property->state}}</option>
                                                 <option value="">--</option>
                                                 <option value="AL">Alabama</option>
                                                 <option value="AK">Alaska</option>
@@ -112,10 +113,14 @@ Manage Property
                                                 <option value="WV">West Virginia</option>
                                                 <option value="WI">Wisconsin</option>
                                                 <option value="WY">Wyoming</option>
-                                            </select></div>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <div class="mb-3"><label class="form-label" for="country"><strong>Country</strong></label><input class="form-control" type="text" id="country-1" placeholder="USA" name="country"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="country"><strong>Country</strong></label>
+                                            <input class="form-control" type="text" id="country-1" placeholder="USA" name="country" value="{{$property->country}}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-end mb-3"><button class="btn btn-primary btn-sm ui-btn" type="submit">Save&nbsp;Settings</button></div>
@@ -128,27 +133,30 @@ Manage Property
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3"><label class="form-label" for="username"><strong>Total Revenue</strong></label>
-                                            <p>$23,049</p>
+                                            <p>${{number_format($total_revenue)}}</p>
                                         </div>
                                         <div class="mb-3"><label class="form-label" for="first_name"><strong>Net Operating Income (NOI)</strong></label>
-                                            <p>23.4%</p>
+                                            <p>N/A</p>
                                         </div>
-                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>Beds</strong></label>
-                                            <p>4</p>
-                                        </div>
+
                                         <div class="mb-3"><label class="form-label" for="first_name"><strong>Property Value</strong></label>
-                                            <p>$428,324</p>
+                                            @if(isset($unit->property_value))
+                                            <p>{{$unit->property_value}}</p>
+                                            @else
+                                            <p> N/A</p>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3"><label class="form-label" for="email"><strong>Total Expenses</strong></label>
-                                            <p>$13,123</p>
+                                            <p>N/A</p>
                                         </div>
                                         <div class="mb-3"><label class="form-label" for="last_name"><strong>MLS #</strong></label>
-                                            <p>732EFH82F8BO189FB917B</p>
-                                        </div>
-                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Baths</strong></label>
-                                            <p>2</p>
+                                            @if(isset($unit->mls_number))
+                                            <p>{{$unit->mls_number}}</p>
+                                            @else
+                                            <p> N/A</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +164,7 @@ Manage Property
                         </div>
                     </div>
                     <div class="heading-container">
-                        <h4 class="float-start mb-0">Units</h4><a class="btn btn-primary float-end ui-btn" role="button" href="add-unit.html">Add New Unit</a>
+                        <h4 class="float-start mb-0">Units</h4><a class="btn btn-primary float-end ui-btn" role="button" href="/dashboard/add-unit/{{$property->id}}">Add New Unit</a>
                     </div>
                     <div class="card shadow">
                         <div class="card-body">
@@ -177,91 +185,36 @@ Manage Property
                                 <table class="table table-hover my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Occupant</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
                                             <th>Unit #</th>
+                                            <th>Occupant</th>
+                                            <th>Beds</th>
+                                            <th>Baths</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($units as $unit)
                                         <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar1.jpeg">Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
+                                            <td>{{$unit->name}}</td>
+                                            <td>
+                                                @if(isset($unit->tenant_id))
+                                                {{$unit->tenant_id}}
+                                                @else
+                                                <span>Unoccupied</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$unit->beds}}</td>
+                                            <td>{{$unit->baths}}</td>
+                                            <td><button class="btn btn-danger delete-unit-button" data-bs-target="#global-modal" data-bs-toggle="modal" data-global-modal-title="Delete {{$unit->name}}?" data-global-modal-message="Are you sure you want to delete this unit?" data-global-modal-confirm="/dashboard/delete_unit/{{$unit->id}}" type="button">Delete</button></td>
                                         </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar2.jpeg">Angelica Ramos</td>
-                                            <td>Chief Executive Officer(CEO)</td>
-                                            <td>London</td>
-                                            <td>47</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar3.jpeg">Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                            <td>Software Engineer</td>
-                                            <td>London</td>
-                                            <td>41</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                            <td>Software Engineer</td>
-                                            <td>San Francisco</td>
-                                            <td>28</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar1.jpeg">Brielle Williamson</td>
-                                            <td>Integration Specialist</td>
-                                            <td>New York</td>
-                                            <td>61</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar2.jpeg">Bruno Nash<br></td>
-                                            <td>Software Engineer</td>
-                                            <td>London</td>
-                                            <td>38</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar3.jpeg">Caesar Vance</td>
-                                            <td>Pre-Sales Support</td>
-                                            <td>New York</td>
-                                            <td>21</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar4.jpeg">Cara Stevens</td>
-                                            <td>Sales Assistant</td>
-                                            <td>New York</td>
-                                            <td>46</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="../assets/img/avatars/avatar5.jpeg">Cedric Kelly</td>
-                                            <td>Senior JavaScript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td><button class="btn btn-primary ui-btn" type="button">Delete</button></td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td><strong>Occupant</strong></td>
-                                            <td><strong>Position</strong></td>
-                                            <td><strong>Office</strong></td>
                                             <td><strong>Unit #</strong></td>
+                                            <td><strong>Occupant</strong></td>
+                                            <td><strong>Beds</strong></td>
+                                            <td><strong>Baths</strong></td>
                                             <td><strong>Action</strong></td>
                                         </tr>
                                     </tfoot>
@@ -292,4 +245,15 @@ Manage Property
 </div>
 @endsection
 
-                
+@section('js')
+<script type="text/javascript">
+    (function($) {
+        $('.delete-unit-button').click(function(e) {
+            $this = $(this);
+            $('#global-modal-title').text($this.attr('data-global-modal-title'));
+            $('#global-modal-message').text($this.attr('data-global-modal-message'));
+            $('#global-modal-confirm').attr("href", $this.attr('data-global-modal-confirm'));
+        });
+    })(jQuery);
+</script>
+@endsection

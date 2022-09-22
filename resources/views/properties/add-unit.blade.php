@@ -9,26 +9,32 @@ Add A Unit
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col-sm-12 col-md-12 col-lg-8 offset-sm-0 offset-md-0 offset-lg-2">
-            <h3 class="text-dark mb-4">Add Unit to [Property Name]</h3>
+            <h3 class="text-dark mb-4">Add Unit to {{App\Models\Property::findOrFail($property->id)->street_address}}</h3>
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label" for="address"><strong>Unit #/Name</strong></label>
-                            <input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address" required="">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label">Beds</label>
-                                    <input class="form-control form-control" type="number" name="beds" value="1" required="">
+                    <form method="POST" action="/dashboard/post-add-unit">
+                        <div class="unit-section">
+                            <div class="unit-rows">
+                                <h4>Units</h4>
+                                <div class="row unit-row">
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Room Number</label>
+                                        <input type="text" class="form-control unit-input" name="unit_names[]" required />
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Beds</label>
+                                        <input type="number" value="1" min="1" class="form-control unit-input" name="unit_beds[]" required />
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group">
+                                        <label>Baths</label>
+                                        <input type="number" value="1" min="1" class="form-control unit-input" name="unit_baths[]" required />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label">Baths</label>
-                                    <input class="form-control form-control" type="number" name="baths" value="1" required="">
-                                </div>
+                            <input type="hidden" value="{{App\Models\Property::findOrFail($property->id)->id}}" name="property_id" />
+                            <div class="unit-controls">
+                                <button type="button" class="btn btn-primary ui-btn remove-unit-btn">-</button>
+                                <button type="button" class="btn btn-primary ui-btn add-unit-btn">+</button>
                             </div>
                         </div>
                         <div class="text-end my-3">

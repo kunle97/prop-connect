@@ -25,6 +25,7 @@
                     <li class="nav-item text-dark"><a class="nav-link" href="/dashboard"><span class="nav-item-span"><img class="nav-icon" src="{{URL::to('../assets/img/window.png')}}">Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/dashboard/tenants/"><img class="nav-icon" src="{{URL::to('../assets/img/multiple-users-silhouette.png')}}"><span class="nav-item-span">Tenants</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/dashboard/properties/"><span class="nav-item-span"><img class="nav-icon" src="{{URL::to('../assets/img/houses.png')}}">Properties</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard/maintenance-requests"><span class="nav-item-span"><img class="nav-icon" src="{{URL::to('../assets/img/settings.png')}}">Maintenance</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/dashboard/my-account/"><span class="nav-item-span"><img class="nav-icon" src="{{URL::to('../assets/img/gear.png')}}">My Account</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button" style="background: rgba(0,0,0,0.2);"></button></div>
@@ -129,6 +130,33 @@
                 </nav>
                 @yield('content')
             </div>
+
+            <!--GLOBAL DASHBOARD MODAL--->
+            <div class="modal fade" role="dialog" tabindex="-1" id="global-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="global-modal-title">
+                                [MODAL TITLE]
+                            </h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="global-modal-message">
+                                [MODAL MESSAGE]
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">
+                                Close</button>
+                            <a id="global-modal-confirm" href=""><button class="btn btn-primary ui-btn" type="button">
+                                    Confirm
+                                </button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"><span>Copyright © PropConnect 2022</span></div>
@@ -141,6 +169,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script src="{{URL::to('../assets/js/bs-init.js')}}"></script>
     <script src="{{URL::to('../assets/js/theme.js')}}"></script>
+    <script type="text/javascript">
+        (function($) {
+            $unit_rows_section = $('.unit-rows');
+            $unit_row = '<div class="row unit-row unit-row-extra"> <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Room Number</label> <input required type="text" class="form-control unit-input" name="unit_names[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Beds</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_beds[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Baths</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_baths[]"/> </div></div>';
+            $add_unit = $('.add-unit-btn');
+            $remove_unit = $('.remove-unit-btn');
+
+            $add_unit.click(function() {
+                $unit_rows_section.append($unit_row);
+            });
+            $remove_unit.click(function() {
+                $('.unit-row-extra').last().remove();
+            });
+        })(jQuery);
+    </script>
     @yield('js')
 </body>
 

@@ -148,21 +148,3 @@ Add A Property
     </div>
 </div>
 @endsection
-
-@section('js')
-<script type="text/javascript">
-    (function($) {
-        $unit_rows_section = $('.unit-rows');
-        $unit_row = '<div class="row unit-row unit-row-extra"> <div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Room Number</label> <input required type="text" class="form-control unit-input" name="unit_names[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Beds</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_beds[]"/> </div><div class="col-md-4 col-sm-12 col-lg-4 unit-form-group"> <label>Baths</label> <input required type="number" value="1" min="1" class="form-control unit-input" name="unit_baths[]"/> </div></div>';
-        $add_unit = $('.add-unit-btn');
-        $remove_unit = $('.remove-unit-btn');
-
-        $add_unit.click(function() {
-            $unit_rows_section.append($unit_row);
-        });
-        $remove_unit.click(function() {
-            $('.unit-row-extra').last().remove();
-        });
-    })(jQuery);
-</script>
-@endsection
