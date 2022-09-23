@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="{{URL::to('../assets/css/landlord-properties.css')}}">
     <link rel="stylesheet" href="{{URL::to('../assets/css/styles.css')}}">
     <link rel="stylesheet" href="{{URL::to('../assets/css/tenant.css')}}">
+    <link rel="stylesheet" href="{{URL::to('../assets/md5/css/datatables-select.min.css')}}">{
+    <style>
+        #dataTable_filter {}
+    </style>
     @yield('styles')
 </head>
 
@@ -52,7 +56,7 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <h6 class="dropdown-header">Recent Activity</h6><a class="dropdown-item d-flex align-items-center" href="#">
                                             <div class="me-3">
                                                 <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                             </div>
@@ -80,7 +84,7 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <h6 class="dropdown-header">Maintenance Requests</h6><a class="dropdown-item d-flex align-items-center" href="#">
                                             <div class="dropdown-list-image me-3"><img class="rounded-circle" src="{{URL::to('../assets/img/avatars/avatar4.jpeg')}}">
                                                 <div class="bg-success status-indicator"></div>
                                             </div>
@@ -157,16 +161,17 @@
                 </div>
             </div>
 
-            <footer class="bg-white sticky-footer">
+            <footer class="bg-white sticky-footer mt-5">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"><span>Copyright © PropConnect 2022</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js" integrity="sha512-CX7sDOp7UTAq+i1FYIlf9Uo27x4os+kGeoT7rgwvY+4dmjqV0IuE/Bl5hVsjnQPQiTOhAX1O2r2j5bjsFBvv/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="{{URL::to('../assets/md5/js/datatables.js')}}"></script>
     <script src="{{URL::to('../assets/js/bs-init.js')}}"></script>
     <script src="{{URL::to('../assets/js/theme.js')}}"></script>
     <script type="text/javascript">
@@ -183,6 +188,15 @@
                 $('.unit-row-extra').last().remove();
             });
         })(jQuery);
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.md5_datatable').DataTable();
+            $('.md5_datatable').addClass('mb-4');
+            $('.md5_datatable').css('overflow-y', 'scroll');
+            $('#dataTable_filter').children('label').addClass('float-end');
+            $('#dataTable_paginate').children('ul.pagination').addClass('float-end');
+        });
     </script>
     @yield('js')
 </body>

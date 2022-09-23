@@ -10,41 +10,15 @@ Manage Property
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col-sm-12 col-md-12 col-lg-10 offset-sm-0 offset-md-0 offset-lg-1">
-            <div class="row mb-3 d-none">
-                <div class="col">
-                    <div class="card text-white bg-primary shadow">
-                        <div class="card-body">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p class="m-0">Peformance</p>
-                                    <p class="m-0"><strong>65.2%</strong></p>
-                                </div>
-                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                            </div>
-                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card text-white bg-success shadow">
-                        <div class="card-body">
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <p class="m-0">Peformance</p>
-                                    <p class="m-0"><strong>65.2%</strong></p>
-                                </div>
-                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                            </div>
-                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col">
                     <div class="card shadow mb-3">
                         <div class="card-body">
-                            <form>
+                            <form action="/dashboard/update-property/" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label" for="name"><strong>Name</strong></label>
+                                    <input class="form-control" type="text" id="name" name="name" value="{{$property->name}}">
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="address"><strong>Address</strong></label>
                                     <input class="form-control" type="text" id="address" name="address" value="{{$property->street_address}}">
@@ -58,8 +32,8 @@ Manage Property
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="mb-3">
-                                            <label class="form-label" for="country"><strong>State</strong></label>
-                                            <select class="form-select">
+                                            <label class="form-label" for="state"><strong>State</strong></label>
+                                            <select name="state" class="form-select">
                                                 <option value="{{$property->state}}">{{$property->state}}</option>
                                                 <option value="">--</option>
                                                 <option value="AL">Alabama</option>
@@ -119,10 +93,12 @@ Manage Property
                                     <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="mb-3">
                                             <label class="form-label" for="country"><strong>Country</strong></label>
-                                            <input class="form-control" type="text" id="country-1" placeholder="USA" name="country" value="{{$property->country}}">
+                                            <input class="form-control" type="text" id="country" name="country" value="{{$property->country}}">
                                         </div>
                                     </div>
                                 </div>
+                                {{@csrf_field()}}
+                                <input name="property_id" value="{{$property->id}}" type="hidden" />
                                 <div class="text-end mb-3"><button class="btn btn-primary btn-sm ui-btn" type="submit">Save&nbsp;Settings</button></div>
                             </form>
                         </div>
@@ -168,74 +144,43 @@ Manage Property
                     </div>
                     <div class="card shadow">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
-                                <table class="table table-hover my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Unit #</th>
-                                            <th>Occupant</th>
-                                            <th>Beds</th>
-                                            <th>Baths</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($units as $unit)
-                                        <tr>
-                                            <td>{{$unit->name}}</td>
-                                            <td>
-                                                @if(isset($unit->tenant_id))
-                                                {{$unit->tenant_id}}
-                                                @else
-                                                <span>Unoccupied</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$unit->beds}}</td>
-                                            <td>{{$unit->baths}}</td>
-                                            <td><button class="btn btn-danger delete-unit-button" data-bs-target="#global-modal" data-bs-toggle="modal" data-global-modal-title="Delete {{$unit->name}}?" data-global-modal-message="Are you sure you want to delete this unit?" data-global-modal-confirm="/dashboard/delete_unit/{{$unit->id}}" type="button">Delete</button></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td><strong>Unit #</strong></td>
-                                            <td><strong>Occupant</strong></td>
-                                            <td><strong>Beds</strong></td>
-                                            <td><strong>Baths</strong></td>
-                                            <td><strong>Action</strong></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
+                            <table class="table table-hover my-0 md5_datatable" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Unit #</th>
+                                        <th>Occupant</th>
+                                        <th>Beds</th>
+                                        <th>Baths</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($units as $unit)
+                                    <tr>
+                                        <td>{{$unit->name}}</td>
+                                        <td>
+                                            @if(isset($unit->tenant_id))
+                                            {{$unit->tenant_id}}
+                                            @else
+                                            <span>Unoccupied</span>
+                                            @endif
+                                        </td>
+                                        <td>{{$unit->beds}}</td>
+                                        <td>{{$unit->baths}}</td>
+                                        <td><button class="btn btn-danger delete-unit-button" data-bs-target="#global-modal" data-bs-toggle="modal" data-global-modal-title="Delete {{$unit->name}}?" data-global-modal-message="Are you sure you want to delete this unit?" data-global-modal-confirm="/dashboard/delete_unit/{{$unit->id}}" type="button">Delete</button></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>Unit #</strong></td>
+                                        <td><strong>Occupant</strong></td>
+                                        <td><strong>Beds</strong></td>
+                                        <td><strong>Baths</strong></td>
+                                        <td><strong>Action</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>

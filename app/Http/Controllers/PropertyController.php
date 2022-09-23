@@ -15,7 +15,7 @@ class PropertyController extends Controller
 
     public function properties()
     {
-        $properties =  Property::where('user_id', Auth::User()->id)->get();
+        $properties =  Property::where('user_id', Auth::User()->id)->orderBy('created_at', 'desc')->get();
         $property_profits = [];
 
         foreach ($properties as $property) {
@@ -32,7 +32,7 @@ class PropertyController extends Controller
     public function manageProperty($property_id)
     {
         $property = Property::findOrFail($property_id);
-        $units = Unit::where('property_id', $property_id)->get();
+        $units = Unit::where('property_id', $property_id)->orderBy('created_at', 'desc')->get();
         $total_revenue = $this->calculatePropertyRevenue($property);
         return view('properties/manage-property', ['property' => $property, 'units' => $units, 'total_revenue' => $total_revenue]);
     }
@@ -66,7 +66,18 @@ class PropertyController extends Controller
         $this->insertUnitsToDB($request);
         return redirect("/dashboard/manage-property/$property_id");
     }
-
+    public function postUpdateProperty(Request $request)
+    {
+        $property = Property::findOrFail($request['property_id']);
+        $property->name =  $request['name'];
+        $property->street_address =  $request['address'];
+        $property->city =  $request['city'];
+        $property->state =  $request['state'];
+        $property->country =  $request['country'];
+        if ($property->update()) {
+            return redirect()->back();
+        }
+    }
 
     public function deleteProperty($property_id)
     { // TODO: Check if occupants are in property before delete

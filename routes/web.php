@@ -29,20 +29,24 @@ Route::get('/dashboard/forgot-password/', [UserController::class, 'forgotPasswor
 
 Route::middleware('auth')->group(function () { //Use this to protect routes that require you to sign in
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
-    Route::get('/dashboard/my-account', [DashboardController::class, 'myAccount']);
-    Route::post('/dashboard/update-my-account', [UserController::class, 'updateBasicInfo']);
+    Route::get('/dashboard/my-account/', [DashboardController::class, 'myAccount']);
+    Route::post('/dashboard/update-my-account/', [UserController::class, 'updateBasicInfo']);
 
-    Route::get('/dashboard/create-maintenance-request', [MaintenanceRequestController::class, 'createMaintenanceRequest']);
-    Route::get('/dashboard/maintenance-requests', [MaintenanceRequestController::class, 'maintenanceRequests']);
+    Route::get('/dashboard/create-maintenance-request/', [MaintenanceRequestController::class, 'createMaintenanceRequest']);
+    Route::post('/dashboard/post-create-maintenance-request/', [MaintenanceRequestController::class, 'postCreateMaintenanceRequest']);
+    Route::get('/dashboard/maintenance-requests/', [MaintenanceRequestController::class, 'maintenanceRequests']);
+    Route::post('/dashboard/maintenance-requests/fetch-units/', [MaintenanceRequestController::class, 'fetchUnits']);
+    Route::get('/dashboard/resolve-maintenance-request/{maintenance_request_id}', [MaintenanceRequestController::class, 'resolveMaintenanceRequest']);
 
     Route::get('/dashboard/properties/', [PropertyController::class, 'properties']);
     Route::get('/dashboard/add-property/', [PropertyController::class, 'addProperty']);
     Route::post('/dashboard/post-add-property', [PropertyController::class, 'createProperty']);
     Route::get('/dashboard/manage-property/{property_id}', [PropertyController::class, 'manageProperty']);
     Route::get('/dashboard/delete-property/{property_id}', [PropertyController::class, 'deleteProperty']);
+    Route::post('/dashboard/update-property/',[PropertyController::class,'postUpdateProperty']);
 
     Route::get('/dashboard/add-unit/{property_id}', [PropertyController::class, 'addUnit']);
-    Route::post('/dashboard/post-add-unit', [PropertyController::class, 'createUnit']);
+    Route::post('/dashboard/post-add-unit/', [PropertyController::class, 'createUnit']);
     Route::get('/dashboard/delete_unit/{unit_id}', [PropertyController::class, 'deleteUnit']);
 
 

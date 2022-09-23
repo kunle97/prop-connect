@@ -15,71 +15,42 @@ Manage Property
             </div>
             <div class="card shadow">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                        <option value="10" selected="">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>&nbsp;</label></div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
-                        </div>
-                    </div>
+                    <table class="table my-0 table-hover md5_datatable" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Street</th>
+                                <th>Units</th>
+                                <th>Total Revenue</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($properties as $key=>$property)
+                            <tr>
+                                <td>{{$property->name}}</td>
+                                <td>{{$property->street_address}}</td>
+                                <td>{{DB::Table('units')->where('property_id', $property->id)->count()}}</td>
+                                <td>${{number_format($property_profits[$key])}}</td>
+                                <td>
+                                    <a href="/dashboard/manage-property/{{$property->id}}"><button class="btn btn-primary ui-btn">Manage</button></a>
+                                    <button class="btn btn-danger delete-property-button" data-bs-target="#global-modal" data-bs-toggle="modal" data-global-modal-title="Delete {{$property->street_address}}?" data-global-modal-message="Are you sure you want to delete this property?" data-global-modal-confirm="/dashboard/delete-property/{{$property->id}}">Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Street</strong></td>
+                                <td><strong>Units</strong></td>
+                                <td><strong>Vacancies</strong></td>
+                                <td><strong>Total Profit</strong></td>
+                                <td><strong>Action</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                        <table class="table my-0 table-hover" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>Street</th>
-                                    <th>Units</th>
-                                    <th>Vacancies</th>
-                                    <th>Total Revenue</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($properties as $key=>$property)
-                                <tr>
-                                    <td>{{$property->street_address}}</td>
-                                    <td>{{DB::Table('units')->where('property_id', $property->id)->count()}}</td>
-                                    <td> TBD</td>
-                                    <td>${{number_format($property_profits[$key])}}</td>
-                                    <td>
-                                        <a href="/dashboard/manage-property/{{$property->id}}"><button class="btn btn-primary ui-btn">Manage</button></a>
-                                        <button class="btn btn-danger delete-property-button" data-bs-target="#global-modal" data-bs-toggle="modal" data-global-modal-title="Delete {{$property->street_address}}?" data-global-modal-message="Are you sure you want to delete this property?" data-global-modal-confirm="/dashboard/delete-property/{{$property->id}}">Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td><strong>Street</strong></td>
-                                    <td><strong>Units</strong></td>
-                                    <td><strong>Vacancies</strong></td>
-                                    <td><strong>Total Profit</strong></td>
-                                    <td><strong>Action</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                        </div>
-                        <div class="col-md-6">
-                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                <ul class="pagination">
-                                    <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                </ul>
-                            </nav>
-                        </div>
                     </div>
                 </div>
             </div>
